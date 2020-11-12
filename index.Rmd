@@ -74,7 +74,7 @@ p2_scatter <- cv_states_today_scatter %>%
          hovermode = "compare")
 ```
 
-## Showcasing plots {.tabset}
+##Lab 12 {.tabset}
 
 ### Figure 1
 
@@ -88,4 +88,50 @@ p1_scatter
 p2_scatter
 ```
 
+{-}
+
+```{r echo=FALSE}
+library(data.table)
+library(tidyverse)
+library(dplyr)
+library(knitr)
+library(usmap)
+```
+
+```{r echo=FALSE}
+cov = data.table::fread("E:/566/midterm/all-states-history.csv")
+cov_d = cov[cov$dataQualityGrade=='D']
+cov= cov[cov$dataQualityGrade!="D", ]
+cov_1006<- cov[date=='2020-10-06']
+```
+
+```{r echo=FALSE}
+cov$deathIncrease[cov$deathIncrease<0] <- NA
+cov$positiveIncrease[cov$positiveIncrease<0] <- NA
+```
+
+## Assignment05 {.tabset}
+
+### Figure 1- The bar charts of COVID-19 deaths.
+```{r echo=FALSE}
+cov_1006 %>%
+  filter(!(death %in% NA)) %>%
+  ggplot(aes(x= state, y=death, fill= state))+
+  geom_bar(stat='identity')
+cov_1006_1 <- cov_1006 [death>5000]
+cov_1006_1$state <-reorder(cov_1006_1$state, -cov_1006_1$death)
+cov_1006_1 %>%
+ggplot(aes(x= state, y=death, fill= state))+
+  geom_bar(stat='identity')+
+  geom_text(aes(label = death , vjust = -0.8, hjust = 0.5, color = state)) 
+```
+
+### Figure 2- The map of COVID-19 deaths.
+
+```{r echo=FALSE}
+cov_1006_d = as.data.frame(cov_1006)
+plot_usmap('states', data =cov_1006, values ='death')+
+scale_fill_continuous(low = "pink", high = "darkred", guide = F)+
+labs(title = "Total number of deaths related to Covid-19 in the USA")
+```
 {-}
