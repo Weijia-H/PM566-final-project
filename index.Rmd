@@ -98,7 +98,7 @@ library(usmap)
 ```
 
 ```{r echo=FALSE}
-cov = data.table::fread("E:/566/midterm/all-states-history.csv")
+cov = data.table::fread("E:/566/PM-566-my-final-project/all-states-history.csv")
 cov_d = cov[cov$dataQualityGrade=='D']
 cov= cov[cov$dataQualityGrade!="D", ]
 cov_1006<- cov[date=='2020-10-06']
