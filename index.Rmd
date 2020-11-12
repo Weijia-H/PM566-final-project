@@ -109,38 +109,60 @@ cov$deathIncrease[cov$deathIncrease<0] <- NA
 cov$positiveIncrease[cov$positiveIncrease<0] <- NA
 ```
 
+<br>
+
 ## Assignment05 {.tabset}
 
 ### Figure 1 - The bar charts of COVID-19 deaths.
+
+```{r echo=FALSE}
+p1 = cov_1006 %>%
+  filter(!(death %in% NA)) %>%
+  ggplot(aes(x= state, y=death, fill= state))+
+  geom_bar(stat='identity')
+p1_show = ggplotly(p1)
+cov_1006_1 <- cov_1006 [death>5000]
+cov_1006_1$state <-reorder(cov_1006_1$state, -cov_1006_1$death)
+p2 = cov_1006_1 %>%
+ggplot(aes(x= state, y=death, fill= state))+
+  geom_bar(stat='identity')+
+  geom_text(aes(label = death , vjust = -0.8, hjust = 0.5, color = state)) 
+p2_show = ggplotly(p2)
+
+```
+
 1.Total death number by states by 10/06/2020
 1.1 The bar charts
 
 - I used ggplot2 package to draw two bar chart. One of them includes all states in the USA and another one includes states number of death is greater than 5000.
+```{r echo=FALSE}
+p1_scatter
+```
 
 - First, take a look at the first bar chart. There are several states being in really terrible conditions. 
 
 - I picked states whose number of death is greater than 5000. Then sort them by their death descendingly. Among them, the New York has the highest total deaths number in the USA. The state of California, New Jersey and Texas have the similar numbers and are ranked second, third and fourth respectively.
+
+includes states number of death is greater than 5000.
 ```{r echo=FALSE}
-cov_1006 %>%
-  filter(!(death %in% NA)) %>%
-  ggplot(aes(x= state, y=death, fill= state))+
-  geom_bar(stat='identity')
-cov_1006_1 <- cov_1006 [death>5000]
-cov_1006_1$state <-reorder(cov_1006_1$state, -cov_1006_1$death)
-cov_1006_1 %>%
-ggplot(aes(x= state, y=death, fill= state))+
-  geom_bar(stat='identity')+
-  geom_text(aes(label = death , vjust = -0.8, hjust = 0.5, color = state)) 
+p2_scatter
 ```
+<br>
 
 ### Figure 2 - The map of COVID-19 deaths.
+
+
+```{r echo=FALSE}
+cov_1006_d = as.data.frame(cov_1006)
+p3 = plot_usmap('states', data =cov_1006, values ='death')+
+scale_fill_continuous(low = "pink", high = "darkred", guide = F)+
+labs(title = "Total number of deaths related to Covid-19 in the USA")
+```
 
 I used usmap package to draw a map. The darker its color is, the higher its number of deaths is. 
 
 ```{r echo=FALSE}
-cov_1006_d = as.data.frame(cov_1006)
-plot_usmap('states', data =cov_1006, values ='death')+
-scale_fill_continuous(low = "pink", high = "darkred", guide = F)+
-labs(title = "Total number of deaths related to Covid-19 in the USA")
+p3
 ```
+
 {-}
