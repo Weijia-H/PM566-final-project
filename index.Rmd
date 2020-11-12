@@ -74,7 +74,7 @@ p2_scatter <- cv_states_today_scatter %>%
          hovermode = "compare")
 ```
 
-##Lab 12 {.tabset}
+## Lab 12 {.tabset}
 
 ### Figure 1
 
@@ -112,7 +112,7 @@ cov$positiveIncrease[cov$positiveIncrease<0] <- NA
 
 ## Assignment05 {.tabset}
 
-### Figure 1- The bar charts of COVID-19 deaths.
+### Figure 1 - The bar charts of COVID-19 deaths.
 ```{r echo=FALSE}
 cov_1006 %>%
   filter(!(death %in% NA)) %>%
@@ -126,7 +126,7 @@ ggplot(aes(x= state, y=death, fill= state))+
   geom_text(aes(label = death , vjust = -0.8, hjust = 0.5, color = state)) 
 ```
 
-### Figure 2- The map of COVID-19 deaths.
+### Figure 2 - The map of COVID-19 deaths.
 
 ```{r echo=FALSE}
 cov_1006_d = as.data.frame(cov_1006)
